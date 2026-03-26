@@ -2,7 +2,7 @@
 
 Простой проект на **Machine Learning (Linear Regression)** для предсказания цены автомобиля.
 
----
+
 
 ## 📌 Описание
 
@@ -15,7 +15,6 @@
 * Doors (двери)
 * Make (марка)
 
----
 
 ## 🧠 Используемые технологии
 
@@ -25,7 +24,6 @@
 * Scikit-learn
 * Flask (веб-интерфейс)
 
----
 
 ## 📊 Возможности
 
@@ -36,7 +34,6 @@
 * Таблица с данными
 * Простая форма для ввода
 
----
 
 ## ⚙️ Установка (для новичков)
 
@@ -47,7 +44,6 @@ git clone https://github.com/OsmonovMeder08/Vehicle-Price-Prediction.git
 cd Vehicle-Price-Prediction
 ```
 
----
 
 ### 2. Создать виртуальное окружение
 
@@ -55,7 +51,6 @@ cd Vehicle-Price-Prediction
 python -m venv .venv
 ```
 
----
 
 ### 3. Активировать его
 
@@ -71,7 +66,6 @@ source .venv/bin/activate
 .venv\Scripts\activate
 ```
 
----
 
 ### 4. Установить зависимости
 
@@ -79,7 +73,6 @@ source .venv/bin/activate
 pip install pandas numpy scikit-learn flask
 ```
 
----
 
 ## 🚀 Запуск проекта
 
@@ -94,7 +87,6 @@ python train.py
 * model.pkl
 * metrics.pkl
 
----
 
 ### 🔹 2. Запуск веб-приложения
 
@@ -108,7 +100,6 @@ python app.py
 http://127.0.0.1:5000
 ```
 
----
 
 ### 🔹 3. Предсказание через терминал
 
@@ -116,14 +107,12 @@ http://127.0.0.1:5000
 python predict.py
 ```
 
----
 
 ## 📈 Метрики
 
 * R² Score отображается в веб-интерфейсе
 * Чем ближе к **1.0**, тем лучше модель
 
----
 
 ## 📂 Структура проекта
 
@@ -145,5 +134,3 @@ Vehicle-Price-Prediction/
 └── static/
     └── regression.png
 ```
-
----
