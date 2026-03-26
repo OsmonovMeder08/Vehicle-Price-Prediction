@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Price Predictions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f6fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* ИЗМЕНЕНО */
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .header-left {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-left h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header-left p {
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .model-type {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 10px; /* ИЗМЕНЕНО */
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .chart-container img {
+            width: 100%; /* ИЗМЕНЕНО */
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .header-right {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .info-item-label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .info-item-value {
+            font-size: 14px;
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .form-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .predict-btn {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .prediction-result {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .prediction-price {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        table thead {
+            background: #2563eb;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header-section">
+            <div class="header-left">
+                <h1>Vehicle Price<br>Predictions</h1>
+                <div class="model-type">Linear Regression</div>
+
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ plot_url }}">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="metric-box">
+                    <div class="metric-value">R²: {{ r2 }}</div> 
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="form-title">Make a Prediction</h2>
+
+            <form method="POST">
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="number" name="year" placeholder="f.example 2020" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Engine</label>
+                        <input type="number" step="any" name="engine" placeholder="f.example 2.0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cylinders</label>
+                        <input type="number" name="cylinders" placeholder="f.example 4" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mileage</label>
+                        <input type="number" name="mileage" placeholder="f.example 50000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Doors</label>
+                        <input type="number" name="doors" placeholder="f.example 4" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Make</label>
+                        <input type="text" name="make" placeholder="f.example Toyota, BMW, Honda, Mercedes" required>
+                    </div>
+                </div>
+
+                <button class="predict-btn">Predict</button>
+
+                {% if prediction %}
+                <div class="prediction-result">
+                    💰 ${{ prediction }}
+                </div>
+                {% endif %}
+
+            </form>
+        </div>
+
+        <div class="data-section">
+            {{ table|safe }}
+        </div>
+
+    </div>
+
+</body>
+
+</html>
